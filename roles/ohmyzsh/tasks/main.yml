@@ -11,6 +11,16 @@
     repo: https://github.com/robbyrussell/oh-my-zsh
     dest: "{{ home_dir }}/.oh-my-zsh"
 
+- name: Cloning zsh-256color plugin
+  git:
+    repo: https://github.com/chrissicool/zsh-256color
+    dest: "{{ home_dir }}/.oh-my-zsh/custom/plugins/zsh-256color"
+
+- name: Cloning zsh-completions
+  git:
+    repo: https://github.com/zsh-users/zsh-completions
+    dest: "{{ home_dir }}/.oh-my-zsh/custom/plugins/zsh-completions"
+
 - name: Creating new ~/.zshrc from template
   template:
     src: "{{ zshrc_template }}"
