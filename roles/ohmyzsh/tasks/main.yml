@@ -1,0 +1,26 @@
+---
+- name: Install Zsh and git
+  dnf:
+    name:
+    - git
+    - zsh
+    state: present
+
+- name: Cloning oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh
+    dest: "{{ home_dir }}/.oh-my-zsh"
+
+- name: Creating new ~/.zshrc from template
+  template:
+    src: "{{ zshrc_template }}"
+    dest: "{{ home_dir }}/.zshrc"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0644'
+
+- name: Fix ownership
+  command: "chown -R {{ username }}:{{ username }} {{ home_dir }}/.oh-my-zsh"
+
+- name: Set Zsh as defult shell
+  command: "chsh -s /bin/zsh {{ username }}"

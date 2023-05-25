@@ -1,0 +1,15 @@
+- name: Install base packages
+  ansible.builtin.dnf:
+    name:
+      - curl
+      - gparted
+      - htop
+      - thunderbird
+      - tree
+      - python3
+      - python3-pip
+      - virtualenv
+      - libreoffice
+      - gpg
+      - tmux
+    state: latest

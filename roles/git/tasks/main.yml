@@ -1,0 +1,12 @@
+- name: Install git
+  dnf:
+    name: git
+    state: present
+
+- name: Setup gitconfig file
+  template:
+    src: gitconfig.j2
+    dest: "{{ home_dir }}/.gitconfig"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: 0644

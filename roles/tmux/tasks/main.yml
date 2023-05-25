@@ -1,0 +1,13 @@
+---
+- name: Install tmux
+  ansible.builtin.dnf:
+    name: tmux
+    state: present
+
+- name: Install ~/.tmux.conf from template
+  template:
+    src: "{{ tmux_template }}"
+    dest: "{{ home_dir }}/.tmux.conf"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0644'

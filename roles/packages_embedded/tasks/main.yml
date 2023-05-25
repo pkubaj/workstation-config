@@ -1,0 +1,7 @@
+- name: Install embedded development packages
+  ansible.builtin.dnf:
+    name:
+    - '@development-tools'
+    - minicom
+    - openocd
+    state: latest
