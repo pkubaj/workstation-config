@@ -8,8 +8,9 @@
       - tree
       - python3
       - python3-pip
-      - virtualenv
+      - python3-virtualenv
       - libreoffice
       - gpg
       - tmux
+      - pre-commit
     state: latest
