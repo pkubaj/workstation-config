@@ -16,3 +16,21 @@
   dnf:
     name: codium
     state: present
+
+- name: Remove VSCode
+  dnf:
+    name: code
+    state: absent
+
+- name: Create symbolic link from /usr/bin/codium to /usr/bin/code
+  file:
+    src: /usr/bin/codium
+    dest: /usr/bin/code
+    state: link
+
+- name: Install extensions
+  become: yes
+  become_user: "{{ username }}"
+  shell: codium --install-extension "{{ item }}"
+  loop: "{{ codium_extensions }}"
+  when: codium_extensions is defined and codium_extensions | length > 0
