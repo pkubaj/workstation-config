@@ -28,6 +28,14 @@
     dest: /usr/bin/code
     state: link
 
+- name: Install settings.json file
+  template:
+    src: "settings.json.j2"
+    dest: "{{ home_dir }}/.config/VSCodium/User/settings.json"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0644'
+
 - name: Install extensions
   become: yes
   become_user: "{{ username }}"
