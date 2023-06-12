@@ -1,0 +1,16 @@
+---
+# general variables
+username: plangowski
+home_dir: /home/{{ username }}
+# used by git gitconfig template
+git_name: "Pawel Langowski"
+git_email: "pawel.langowski@3mdeb.com"
+# used by ohmyzsh (zshrc template)
+zshrc_template: "zshrc.j2"
+zkbd_template: "xterm-256color-:0.j2"
+# used by tmux role
+tmux_template: "tmux.conf.j2"
+# used by vim role
+vimrc_template: "vimrc.j2"
+# used by kas role
+ssh_config_template: "config.j2"
