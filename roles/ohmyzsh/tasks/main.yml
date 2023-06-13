@@ -23,8 +23,8 @@
 
 - name: Creating new ~/.zshrc from template
   template:
-    src: "{{ zkbd_template }}"
-    dest: "{{ home_dir }}/.zkbd/"
+    src: "{{ zshrc_template }}"
+    dest: "{{ home_dir }}/.zshrc"
     owner: "{{ username }}"
     group: "{{ username }}"
     mode: '0644'
@@ -38,7 +38,7 @@
 
 - name: Creating new ~/.zkbd/xterm-256color-:0 from template
   template:
-    src: "{{ zshrc_template }}"
+    src: "{{ zkbd_template }}"
     dest: "{{ home_dir }}/.zkbd/xterm-256color-:0"
     owner: "{{ username }}"
     group: "{{ username }}"

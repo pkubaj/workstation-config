@@ -9,7 +9,7 @@ git_email: "maciej.pijanowski@3mdeb.com"
 
 # used by ohmyzsh (zshrc template)
 zshrc_template: "zshrc.j2"
-zkbd_template: ".zkbd/xterm-256color-:0.j2"
+zkbd_template: "xterm-256color-:0.j2"
 
 # used by tmux role
 tmux_template: "tmux.conf.j2"
