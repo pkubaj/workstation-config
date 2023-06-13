@@ -28,6 +28,13 @@
     dest: /usr/bin/code
     state: link
 
+- name: Ensure {{ home_dir }}/.config/VSCodium/User directory exists
+  file:
+    path: "{{ home_dir }}/.config/VSCodium/User"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
 - name: Install settings.json file
   template:
     src: "settings.json.j2"
