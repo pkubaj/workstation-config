@@ -1,0 +1,51 @@
+---
+- name: Import VSCodium RPM release key
+  ansible.builtin.rpm_key:
+    state: present
+    key: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+
+- name: Install /etc/yum.repos.d/vscodium.repo 
+  template:
+    src: "vscodium.repo.j2"
+    dest: "/etc/yum.repos.d/vscodium.repo"
+    owner: "root"
+    group: "root"
+    mode: '0644'
+
+- name: Install VSCodium
+  dnf:
+    name: codium
+    state: present
+
+- name: Remove VSCode
+  dnf:
+    name: code
+    state: absent
+
+- name: Create symbolic link from /usr/bin/codium to /usr/bin/code
+  file:
+    src: /usr/bin/codium
+    dest: /usr/bin/code
+    state: link
+
+- name: Ensure {{ home_dir }}/.config/VSCodium/User directory exists
+  file:
+    path: "{{ home_dir }}/.config/VSCodium/User"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Install settings.json file
+  template:
+    src: "settings.json.j2"
+    dest: "{{ home_dir }}/.config/VSCodium/User/settings.json"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0644'
+
+- name: Install extensions
+  become: yes
+  become_user: "{{ username }}"
+  shell: codium --install-extension "{{ item }}"
+  loop: "{{ codium_extensions }}"
+  when: codium_extensions is defined and codium_extensions | length > 0

@@ -29,6 +29,21 @@
     group: "{{ username }}"
     mode: '0644'
 
+- name: Ensure ~/.zkbd exists
+  file:
+    path: "{{ home_dir }}/.zkbd"
+    state: directory
+    owner: "{{ username }}"
+    group: "{{ username }}"
+
+- name: Creating new ~/.zkbd/xterm-256color-:0 from template
+  template:
+    src: "{{ zkbd_template }}"
+    dest: "{{ home_dir }}/.zkbd/xterm-256color-:0"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0644'
+
 - name: Fix ownership
   command: "chown -R {{ username }}:{{ username }} {{ home_dir }}/.oh-my-zsh"
 

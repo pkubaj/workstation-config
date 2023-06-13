@@ -4,21 +4,24 @@
 
 * Installed system (tested with Fedora 38)
 * Created user with `sudo` access
-* [Installed ansible](https://docs.ansible.com/ansible/latest/installation_guide/installation_distros.html) 
-* [Installed ansible docker role](https://galaxy.ansible.com/geerlingguy/docker) 
+* Installed dependencies by running `./bootstrap.sh` script:
+
+  ```shell
+  ./bootstrap.sh
+  ```
 
 * Create `extra vars` from template eg.:
   
   > Fill in your user details. You can also provide your own templates.
 
   ```
-  $ cp extra_vars/username-template.yml extra_vars/$USER.yml
+  cp extra_vars/username-template.yml extra_vars/$USER.yml
   ```
 
 ## Usage
 
 ```bash
-$ ansible-playbook --ask-become-pass --extra-vars @extra_vars/$USER.yml workstation-setup-eft.yml
+ansible-playbook --ask-become-pass --extra-vars @extra_vars/$USER.yml workstation-setup-eft.yml
 ```
 
 Currently, the default and tested usage is self-setup of the workstation on
