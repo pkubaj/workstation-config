@@ -13,4 +13,5 @@
       - gpg
       - tmux
       - pre-commit
+      - util-linux-user
     state: latest
