@@ -25,6 +25,10 @@
     clone: yes
   become: true
   become_user: "{{ username }}"
+- name: Create ~/.local/bin directory for markdown.sh script
+  file:
+    path: "{{ home_dir }}/.local/bin"
+    state: directory
 
 - name: Create symlink for markdown.sh script
   vars:
