@@ -15,3 +15,23 @@
       - pre-commit
       - util-linux-user
     state: latest
+- name: Clone markdown linter
+  vars:
+    repo_url: "https://github.com/3mdeb/hooks.git"
+    repo_path: "{{ home_dir }}/.config/3mdeb-hooks"
+  git:
+    repo: "{{ repo_url }}"
+    dest: "{{ repo_path }}"
+    clone: yes
+  become: true
+  become_user: "{{ username }}"
+
+- name: Create symlink for markdown.sh script
+  vars:
+    symlink_src: "{{ home_dir }}/.config/3mdeb-hooks/markdown.sh"
+    symlink_dest: "{{ home_dir }}/.local/bin/markdown.sh"
+  file:
+    src: "{{ symlink_src }}"
+    dest: "{{ symlink_dest }}"
+    state: link
+    force: yes
