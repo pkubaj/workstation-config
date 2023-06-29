@@ -19,7 +19,7 @@
 	ign = ls-files -o -i --exclude-standard
 	dt = difftool
 	tags = for-each-ref --sort=taggerdate --format '%(refname) %(taggerdate)' refs/tags
-	sm = git submodule update --init --recursive
+	sm = submodule update --init --recursive
 [user]
 	name = {{ git_name }}
 	email = {{ git_email }}
