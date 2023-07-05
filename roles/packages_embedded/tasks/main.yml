@@ -20,14 +20,14 @@
     register: minirc_dfl_data
     
     -name: Report if minicom default settings exist
-      debug:
-        msg: "minirc.dfl exists"
-      when: minirc_dfl_data.stat.exists
+    debug:
+      msg: "minirc.dfl exists"
+    when: minirc_dfl_data.stat.exists
 
     -name: Report if minicom default settings dont exist
-      copy:
-        dest: "/etc/minirc.dfl"
-        content: |
-          # Machine-generated file - use "minicom -s" to change parameters.
-          pu rtscts           No
-      when: not minirc_dfl_data.stat.exists
+    copy:
+      dest: "/etc/minirc.dfl"
+      content: |
+        # Machine-generated file - use "minicom -s" to change parameters.
+        pu rtscts           No
+    when: not minirc_dfl_data.stat.exists
