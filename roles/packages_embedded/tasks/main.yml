@@ -12,22 +12,20 @@
     groups: dialout
     append: yes
 
-- name: Disable hardware flow control in minicom
-  tasks:
-    -name: Check if minicom default settings exist
-    stat:
-      path: "/etc/minirc.dfl"
-    register: minirc_dfl_data
-    
-    -name: Report if minicom default settings exist
-    debug:
-      msg: "minirc.dfl exists"
-    when: minirc_dfl_data.stat.exists
+- name: Check if minicom default settings exist
+  stat:
+    path: "/etc/minirc.dfl"
+  register: minirc_dfl_data
 
-    -name: Report if minicom default settings dont exist
-    copy:
-      dest: "/etc/minirc.dfl"
-      content: |
-        # Machine-generated file - use "minicom -s" to change parameters.
-        pu rtscts           No
-    when: not minirc_dfl_data.stat.exists
+- name: Report if minicom default settings exist
+  debug:
+    msg: "minirc.dfl exists"
+  when: minirc_dfl_data.stat.exists
+
+- name: Report if minicom default settings dont exist
+  copy:
+    dest: "/etc/minirc.dfl"
+    content: |
+      # Machine-generated file - use "minicom -s" to change parameters.
+      pu rtscts           No
+  when: not minirc_dfl_data.stat.exists
