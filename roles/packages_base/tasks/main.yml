@@ -14,6 +14,7 @@
       - tmux
       - pre-commit
       - util-linux-user
+      - openssl
     state: latest
 - name: Clone markdown linter
   vars:
