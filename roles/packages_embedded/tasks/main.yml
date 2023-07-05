@@ -5,3 +5,10 @@
     - minicom
     - openocd
     state: latest
+
+- name: Allow user to use serial device without sudo
+  ansible.builtin.user:
+    name: "{{ username }}"
+    groups: dialout
+    append: yes
+
