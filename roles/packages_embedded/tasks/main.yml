@@ -6,6 +6,11 @@
     - openocd
     state: latest
 
+- name: Create the dialout group if it doesn't exist
+  ansible.builtin.group:
+    name: "dialout"
+    state: present
+
 - name: Allow user to use serial device without sudo
   ansible.builtin.user:
     name: "{{ username }}"
