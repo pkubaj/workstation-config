@@ -27,7 +27,7 @@
     msg: "minirc.dfl exists"
   when: minirc_dfl_data.stat.exists
 
-- name: Report if minicom default settings dont exist
+- name: Create minicom settings if it does not exist
   copy:
     dest: "/etc/minirc.dfl"
     content: |
