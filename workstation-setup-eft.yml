@@ -1,14 +1,15 @@
 - hosts: localhost
   connection: local
   user: "{{ username }}"
-  become: true
+  become: false
   vars:
     docker_users:
       - "{{ username }}"
   roles:
     - packages_base
     - packages_embedded
-    - geerlingguy.docker
+    - role:  geerlingguy.docker
+      become: true
     - git
     - tmux
     - ohmyzsh
