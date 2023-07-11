@@ -6,6 +6,25 @@
     - openocd
     state: latest
 
+# Edge case scenario but still somewhat possible
+- name : Create ~/.local if it doesn't already exist
+  file:
+    path: "{{ home_dir }}/.local"
+    state: directory
+
+- name : Create ~/bin if it doesn't already exist
+  file:
+    path: "{{ home_dir }}/.local/bin"
+    state: directory
+
+- name: Install kas container 3.0.2
+  ansible.builtin.get_url:
+    url: https://raw.githubusercontent.com/siemens/kas/3.0.2/kas-container
+    dest: "{{ home_dir }}/.local/bin/kas-container"
+    owner: "{{ username }}"
+    group: "{{ username }}"
+    mode: '0755'
+
 - name: Create the dialout group if it doesn't exist
   ansible.builtin.group:
     name: "dialout"
