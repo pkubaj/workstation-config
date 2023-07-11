@@ -13,3 +13,5 @@
     - tmux
     - ohmyzsh
     - vscodium
+    # The messages role should stay as the last one.
+    - messages

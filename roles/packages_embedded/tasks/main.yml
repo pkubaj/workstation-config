@@ -5,3 +5,32 @@
     - minicom
     - openocd
     state: latest
+
+- name: Create the dialout group if it doesn't exist
+  ansible.builtin.group:
+    name: "dialout"
+    state: present
+
+- name: Allow user to use serial device without sudo
+  ansible.builtin.user:
+    name: "{{ username }}"
+    groups: dialout
+    append: yes
+
+- name: Check if minicom default settings exist
+  stat:
+    path: "/etc/minirc.dfl"
+  register: minirc_dfl_data
+
+- name: Report if minicom default settings exist
+  debug:
+    msg: "minirc.dfl exists"
+  when: minirc_dfl_data.stat.exists
+
+- name: Create minicom settings if it does not exist
+  copy:
+    dest: "/etc/minirc.dfl"
+    content: |
+      # Machine-generated file - use "minicom -s" to change parameters.
+      pu rtscts           No
+  when: not minirc_dfl_data.stat.exists
