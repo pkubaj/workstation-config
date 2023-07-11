@@ -10,7 +10,7 @@ set -g mouse on
 setw -g mode-keys vi
 
 # additional vi-llike copy and paste
-bind-key -t copy-mode-vi-copy 'v' send-keys -X begin-selection
+bind-key -T copy-mode-vi-copy 'v' send-keys -X begin-selection
 bind-key -T copy-mode-vi 'y' send-keys -X copy-selection
 
 # vi-like pane switching
