@@ -1,37 +1,27 @@
 - name: Install embedded development packages
-  ansible.builtin.dnf:
+  become: true
+  dnf:
     name:
     - '@development-tools'
     - minicom
     - openocd
     state: latest
 
-# Edge case scenario but still somewhat possible
-- name : Create ~/.local if it doesn't already exist
-  file:
-    path: "{{ home_dir }}/.local"
-    state: directory
-
-- name : Create ~/bin if it doesn't already exist
-  file:
-    path: "{{ home_dir }}/.local/bin"
-    state: directory
-
 - name: Install kas container 3.0.2
-  ansible.builtin.get_url:
+  get_url:
     url: https://raw.githubusercontent.com/siemens/kas/3.0.2/kas-container
     dest: "{{ home_dir }}/.local/bin/kas-container"
-    owner: "{{ username }}"
-    group: "{{ username }}"
     mode: '0755'
 
 - name: Create the dialout group if it doesn't exist
-  ansible.builtin.group:
+  become: true
+  group:
     name: "dialout"
     state: present
 
 - name: Allow user to use serial device without sudo
-  ansible.builtin.user:
+  become: true
+  user:
     name: "{{ username }}"
     groups: dialout
     append: yes
@@ -47,6 +37,7 @@
   when: minirc_dfl_data.stat.exists
 
 - name: Create minicom settings if it does not exist
+  become: true
   copy:
     dest: "/etc/minirc.dfl"
     content: |

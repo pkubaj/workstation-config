@@ -1,5 +1,6 @@
 - name: Install base packages
-  ansible.builtin.dnf:
+  become: true
+  dnf:
     name:
       - curl
       - gparted
@@ -16,6 +17,13 @@
       - util-linux-user
       - openssl
     state: latest
+
+- name: Create ~/.local/bin directory if it does not exist
+  file:
+    path: "{{ home_dir }}/.local/bin"
+    state: directory
+    recurse: yes
+
 - name: Clone markdown linter
   vars:
     repo_url: "https://github.com/3mdeb/hooks.git"
@@ -24,12 +32,6 @@
     repo: "{{ repo_url }}"
     dest: "{{ repo_path }}"
     clone: yes
-  become: true
-  become_user: "{{ username }}"
-- name: Create ~/.local/bin directory for markdown.sh script
-  file:
-    path: "{{ home_dir }}/.local/bin"
-    state: directory
 
 - name: Create symlink for markdown.sh script
   vars:
