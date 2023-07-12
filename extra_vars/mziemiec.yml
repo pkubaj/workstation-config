@@ -4,7 +4,7 @@ username: mziemiec
 home_dir: /home/{{ username }}
 
 # used by git gitconfig template
-git_name: "Mixss"
+git_name: "Michał Ziemiec"
 git_email: "michal.ziemiec@3mdeb.com"
 
 # used by ohmyzsh (zshrc template)
