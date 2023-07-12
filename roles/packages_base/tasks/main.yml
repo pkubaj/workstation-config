@@ -52,7 +52,7 @@
     fi
   register: gpu_gen
 
-- name: Install RPM Fusion repositories
+- name: Install RPM Fusion repositories (for Intel CPUs 7th or older generations)
   become: true
   dnf:
     name:
@@ -61,7 +61,7 @@
     state: present
   when: (gpu_gen.stdout | int) <= 7
 
-- name: Swap ffmpeg-free with ffmpeg
+- name: Swap ffmpeg-free with ffmpeg (for Intel CPUs 7th or older generations)
   become: true
   dnf:
     name: ffmpeg
@@ -69,7 +69,7 @@
     disablerepo: ffmpeg-free
   when: (gpu_gen.stdout | int) <= 7
 
-- name: Install libva-intel-driver
+- name: Install libva-intel-driver (for Intel CPUs 7th or older generations)
   become: true
   dnf:
     name: libva-intel-driver
