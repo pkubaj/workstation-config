@@ -42,3 +42,38 @@
     dest: "{{ symlink_dest }}"
     state: link
     force: yes
+
+- name: Check the generation of GPU
+  become: true
+  shell: |
+    if test -d "/sys/kernel/debug/dri/1"
+    then
+      cat /sys/kernel/debug/dri/1/i915_gpu_info | grep "graphics version" | cut -d ' ' -f 3
+    else
+      cat /sys/kernel/debug/dri/0/i915_gpu_info | grep "graphics version" | cut -d ' ' -f 3
+    fi
+  register: gpu_gen
+
+- name: Install RPM Fusion repositories (for Intel CPUs 7th or older generations)
+  become: true
+  dnf:
+    name:
+      - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+      - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+    state: present
+  when: (gpu_gen.stdout | int) <= 7
+
+- name: Swap ffmpeg-free with ffmpeg (for Intel CPUs 7th or older generations)
+  become: true
+  dnf:
+    name: ffmpeg
+    state: present
+    disablerepo: ffmpeg-free
+  when: (gpu_gen.stdout | int) <= 7
+
+- name: Install libva-intel-driver (for Intel CPUs 7th or older generations)
+  become: true
+  dnf:
+    name: libva-intel-driver
+    state: present
+  when: (gpu_gen.stdout | int) <= 7
