@@ -1,0 +1,18 @@
+---
+- name: Install Sway and friends
+  become: true
+  dnf:
+      name:
+        - sway                   # Window manager / Wayland compositor
+        - swayidle               # Idle daemon
+        - swaylock               # Lock screen
+        - swaybg                 # Wallpaper setting tool
+        - sway-systemd           # SystemD integration glue
+        - waybar                 # Top bar
+        - bemenu                 # Application launcher, scriptable menu
+        - kanshi                 # Dynamic monitor configuration daemon
+        - mako                   # Notification daemon
+        - xdg-desktop-portal     # Screen sharing / file picking service
+        - xdg-desktop-portal-wlr # For screen sharing in wlroots based compositors
+        - xdg-desktop-portal-gtk # For file pickers in Flatpak apps
+        - wdisplays              # Graphical monitor configuration tool
