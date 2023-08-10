@@ -1,7 +1,7 @@
 ---
 - name: Install Zsh and git
   become: true
-  dnf:
+  apt:
     name:
     - git
     - zsh

@@ -1,6 +1,6 @@
 - name: Install git
   become: true
-  dnf:
+  apt:
     name: git
     state: present
 

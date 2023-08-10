@@ -1,26 +1,28 @@
 ---
-- name: Import VSCodium RPM release key
+- name: Import VSCodium APT release key
   become: true
-  rpm_key:
-    state: present
-    key: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+  shell: >
+    wget -O- https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg |
+    gpg --dearmor |
+    sudo tee /usr/share/keyrings/vscodium-archive-keyring.gpg > /dev/null
 
-- name: Install /etc/yum.repos.d/vscodium.repo 
+- name: Install /etc/apt/sources.list.d/vscodium.list
   become: true
   template:
-    src: "vscodium.repo.j2"
-    dest: "/etc/yum.repos.d/vscodium.repo"
+    src: "vscodium.list.j2"
+    dest: "/etc/apt/sources.list.d/vscodium.list"
     mode: '0644'
 
 - name: Install VSCodium
   become: true
-  dnf:
+  apt:
     name: codium
     state: present
+    update_cache: yes
 
 - name: Remove VSCode
   become: true
-  dnf:
+  apt:
     name: code
     state: absent
 

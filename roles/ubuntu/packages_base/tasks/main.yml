@@ -1,6 +1,6 @@
 - name: Install base packages
   become: true
-  dnf:
+  apt:
     name:
       - curl
       - gparted
@@ -14,7 +14,7 @@
       - gpg
       - tmux
       - pre-commit
-      - util-linux-user
+      - util-linux
       - openssl
     state: latest
 

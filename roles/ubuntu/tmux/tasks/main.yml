@@ -1,7 +1,7 @@
 ---
 - name: Install tmux
   become: true
-  dnf:
+  apt:
     name: tmux
     state: present
 

@@ -1,8 +1,8 @@
 - name: Install embedded development packages
   become: true
-  dnf:
+  apt:
     name:
-    - '@development-tools'
+    - build-essential
     - minicom
     - openocd
     state: latest
