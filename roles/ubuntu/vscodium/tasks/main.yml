@@ -1,0 +1,48 @@
+---
+- name: Import VSCodium RPM release key
+  become: true
+  rpm_key:
+    state: present
+    key: https://gitlab.com/paulcarroty/vscodium-deb-rpm-repo/-/raw/master/pub.gpg
+
+- name: Install /etc/yum.repos.d/vscodium.repo 
+  become: true
+  template:
+    src: "vscodium.repo.j2"
+    dest: "/etc/yum.repos.d/vscodium.repo"
+    mode: '0644'
+
+- name: Install VSCodium
+  become: true
+  dnf:
+    name: codium
+    state: present
+
+- name: Remove VSCode
+  become: true
+  dnf:
+    name: code
+    state: absent
+
+- name: Create symbolic link from /usr/bin/codium to /usr/bin/code
+  become: true
+  file:
+    src: /usr/bin/codium
+    dest: /usr/bin/code
+    state: link
+
+- name: Ensure {{ home_dir }}/.config/VSCodium/User directory exists
+  file:
+    path: "{{ home_dir }}/.config/VSCodium/User"
+    state: directory
+
+- name: Install settings.json file
+  template:
+    src: "settings.json.j2"
+    dest: "{{ home_dir }}/.config/VSCodium/User/settings.json"
+    mode: '0644'
+
+- name: Install extensions
+  shell: codium --install-extension "{{ item }}"
+  loop: "{{ codium_extensions }}"
+  when: codium_extensions is defined and codium_extensions | length > 0
