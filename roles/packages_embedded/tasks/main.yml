@@ -5,6 +5,7 @@
     - '@development-tools'
     - minicom
     - openocd
+    - clang-tools-extra
     state: latest
 
 - name: Install kas container 3.0.2
