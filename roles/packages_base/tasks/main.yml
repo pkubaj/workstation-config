@@ -58,8 +58,8 @@
   become: true
   dnf:
     name:
-      - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-{{ ansible_distribution_major_version }}.noarch.rpm"
-      - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-{{ ansible_distribution_major_version }}.noarch.rpm"
+      - "https://mirrors.rpmfusion.org/free/fedora/rpmfusion-free-release-$(rpm -E %fedora).noarch.rpm"
+      - "https://mirrors.rpmfusion.org/nonfree/fedora/rpmfusion-nonfree-release-$(rpm -E %fedora).noarch.rpm"
     state: present
   when: (gpu_gen.stdout | int) <= 7
 
@@ -67,6 +67,7 @@
   become: true
   dnf:
     name: ffmpeg
+    allowerasing: true
     state: present
     disablerepo: ffmpeg-free
   when: (gpu_gen.stdout | int) <= 7
