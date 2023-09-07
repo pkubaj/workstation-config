@@ -16,6 +16,7 @@
       - pre-commit
       - util-linux-user
       - openssl
+      - neovim
     state: latest
 
 - name: Create ~/.local/bin directory if it does not exist
